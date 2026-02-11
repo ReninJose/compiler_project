@@ -22,9 +22,9 @@ Input language: C
 - floating point
 
 ### Operators:
-- +
-- -
-- *
+- \+
+- \-
+- \*
 - /
 - =
 - ==
