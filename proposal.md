@@ -30,15 +30,16 @@ List any tools, frameworks, or libraries you plan to use:
 - Build tools: CMake
 - Dependency Management: vcpkg
 - Testing frameworks: LLVM lit
+- flex
 
 ## 7. Repository Information
 - **Repository hosting service:** Github
 - **Repository URL:** https://github.com/ReninJose/compiler_project#
 
 ## 8. Project Status
-- [yes] Repository created
-- [yes] README file added
-- [yes] Initial project structure committed
+- [x] Repository created
+- [x] README file added
+- [x] Initial project structure committed
 
 ## 9. Additional Notes
 May change the planned libraries/tools while developing the project. 
