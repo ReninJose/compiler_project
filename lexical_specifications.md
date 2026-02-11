@@ -29,9 +29,9 @@ Input language: C
 - =
 - ==
 - !=
-- >
+- \>
 - <
-- >=
+- \>=
 - <=
 
 ## Formal Specification
