@@ -17,7 +17,7 @@ CHAR \'({LETTERS}|{DIGITS}|{WHITESPACE}|_)\'
 IDENTIFIERS {LETTERS}({LETTERS}|{DIGITS}|_)*
 STR \"({LETTERS}|{DIGITS}|{WHITESPACE}|_)+\"
 OPERATORS (=|==|<|>|<=|>=|\+|\-|\*|\/)
-KEYWORDS (int|float|char|if|else|void)
+KEYWORDS (int|float|char|bool|if|else|void)
 BOOLEANS (true|false)
 
 /* Ranking matters */

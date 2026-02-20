@@ -12,6 +12,7 @@ Input language: C
 - if
 - else
 - if else
+- bool
 - true
 - false
 
@@ -40,14 +41,12 @@ Input language: C
 - Single character wrapped by ''
 - Single small letter
 - Single capital letter
-- Only 1 special char support: _ (for now)
 
 ### Strings
 - Group of characters bundled by ""
 - Small letters
 - Capital letters
 - Numbers represented as char
-- Only 1 special char support: _ (for now)
 
 ## Formal Specification
 ### Keywords
@@ -78,6 +77,10 @@ Input language: C
 - char emptyString[] = "";
 - char a_string[128] = "test123";
 - char str[10]="_";
+#### Boolean:
+- Example: bool\s+[a-zA-Z][a-zA-Z0-9_]*\s(=\s*(true|false))?;
+- bool isValid = true;
+- bool not_valid = false;
 #### If statement:
 - if\s*\(\s*((".*")|.*)\s*==\s*((".*"|'.')|.*|true|false)\s*\)     # Ignoring "{}"
 - Example:
@@ -90,7 +93,7 @@ Input language: C
 #### Else statement:
 - else\s    # Ignoring "{}"
 #### Else-if statement:
-- else\sif\s*\(\s*((".*")|.*)\s*==\s*((".*"\'.')|.*|true|false)\s*\)     # Ignoring "{}"
+- else\sif\s*\(\s*((".*")|.*)\s*==\s*((".*"|'.')|.*|true|false)\s*\)     # Ignoring "{}"
 - Example:
 - else if(bool==True)
 - else if(chr =  's')
