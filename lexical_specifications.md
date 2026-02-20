@@ -40,14 +40,14 @@ Input language: C
 - Single character wrapped by ''
 - Single small letter
 - Single capital letter
-- Single special characters
+- Only 1 special char support: _ (for now)
 
 ### Strings
 - Group of characters bundled by ""
 - Small letters
 - Capital letters
 - Numbers represented as char
-- Special characters such as !, @, or #
+- Only 1 special char support: _ (for now)
 
 ## Formal Specification
 ### Keywords
@@ -56,7 +56,7 @@ Input language: C
 - Example:
 - int _name;
 - int n45_=3;
-- int negative = -10000
+- int  negative = -10000
 #### Float:
 - float\s+[a-zA-Z][a-zA-Z0-9_]*\s*(=\s*[+-]?[0-9]+(\.[0-9]+)?)?;
 - Example:
@@ -79,15 +79,18 @@ Input language: C
 - char a_string[128] = "test123";
 - char str[10]="_";
 #### If statement:
-- if\s*\(\s*((".*")|.*)\s*==\s*((".*")|.*)\s*\)     # Ignoring "{}"
+- if\s*\(\s*((".*")|.*)\s*==\s*((".*"|'.')|.*|true|false)\s*\)     # Ignoring "{}"
 - Example:
 - if(t==10)
 - if (4==29 )
 - if(str=="lemon")
 - if ("char1" == "char2")
-- if(character=="M")
+- if(character=="M" )
 - if(identifier1 == identifier2)
 #### Else statement:
 - else\s    # Ignoring "{}"
 #### Else-if statement:
-- else\sif\s*\(\s*((".*")|.*)\s*==\s*((".*")|.*)\s*\)     # Ignoring "{}"
+- else\sif\s*\(\s*((".*")|.*)\s*==\s*((".*"\'.')|.*|true|false)\s*\)     # Ignoring "{}"
+- Example:
+- else if(bool==True)
+- else if(chr =  's')
