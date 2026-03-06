@@ -8,51 +8,35 @@ extern std::string yylval;
 
 int main(){
     int token;
-    std::ifstream file("Scanner/input.c");
-    if(!file.is_open()){
-        std::cerr<<"Unable to open file";
-        return 1;
+    std::string testDirectory = "Scanner/test/";
+    std::string testCases[5] = {testDirectory+"test1.c", 
+        testDirectory+"test2.c", 
+        testDirectory+"test3.c",
+        testDirectory+"test4.c",
+        testDirectory+"test5.c"
+    
+    };
+
+    for(int i = 0; i < 5; i++){
+        std::ifstream file(testCases[i]);
+        printf("Opening file %s\n", testCases[i].c_str());
+        if(!file.is_open()){
+            std::cerr<<"Unable to open file";
+            return 1;
+        }
+
+        yyFlexLexer lexer(&file);
+
+        while(true){
+            int tok = lexer.yylex();
+            if(tok == 0){
+                break;
+            }
+            printf("%s : %d\n", lexer.YYText(), tok);
+        }
+        printf("\n");
     }
 
-    yyFlexLexer lexer(&file);
-    
-
-    while ((token = lexer.yylex()) != 0){
-        switch (token)
-        {
-        case static_cast<int>(Token::KEYWORD):
-            std::cout << "Keyword: ";
-            break;
-        case static_cast<int>(Token::IDENTIFIERS):
-            std::cout << "identifier: ";
-            break;
-        case static_cast<int>(Token::OPERATORS):
-            std::cout << "operator: ";
-            break;
-        case static_cast<int>(Token::FLOAT_LITERAL):
-            std::cout << "float_literal: ";
-            break;
-        case static_cast<int>(Token::INT_LITERAL):
-            std::cout << "int_literal: ";
-            break;
-        case static_cast<int>(Token::CHAR_LITERAL):
-            std::cout << "char_literal: ";
-            break;
-        case static_cast<int>(Token::STRING_LITERAL):
-            std::cout << "string_literal: ";
-            break;
-        case static_cast<int>(Token::BOOLEANS):
-            std::cout << "boolean: ";
-            break;
-        case static_cast<int>(Token::TOKEN_ERROR):
-            std::cout << "Unknown token: ";
-            break;
-        }
-        std::cout<< yylval << "\n";
-    };
-    
-    file.close();
     return 0;
 }
-
 

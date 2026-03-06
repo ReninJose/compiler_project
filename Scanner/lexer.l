@@ -3,9 +3,7 @@
 
 %{
 #include<iostream>
-#include<string>
 #include"token.h"
-std::string yylval;
 %}
 
 WHITESPACE [ ]
@@ -22,18 +20,16 @@ BOOLEANS (true|false)
 
 /* Ranking matters */
 %%
-char\[{DIGITS}*\] { yylval = YYText(); return static_cast<int>(Token::KEYWORD); } /* Standalone string keyword to avoid mixing with char */
-{KEYWORDS} { yylval = YYText(); return static_cast<int>(Token::KEYWORD); }
-{BOOLEANS} { yylval = YYText(); return static_cast<int>(Token::BOOLEANS); }
-{IDENTIFIERS} { yylval = YYText(); return static_cast<int>(Token::IDENTIFIERS); }
-{OPERATORS} { yylval = YYText(); return static_cast<int>(Token::OPERATORS); }
-{FLOAT} { yylval = YYText(); return static_cast<int>(Token::FLOAT_LITERAL); }
-{INT} { yylval = YYText(); return static_cast<int>(Token::INT_LITERAL); }
-{STR} { yylval = YYText(); return static_cast<int>(Token::STRING_LITERAL); }
-{CHAR} { yylval = YYText(); return static_cast<int>(Token::CHAR_LITERAL); }
+char\[{DIGITS}*\] { return KEYWORD; } /* Standalone string keyword to avoid mixing with char */
+{KEYWORDS} { return KEYWORD; }
+{BOOLEANS} { return BOOLEANS; }
+{IDENTIFIERS} { return IDENTIFIERS; }
+{OPERATORS} { return OPERATORS; }
+{FLOAT} { return FLOAT_LITERAL; }
+{INT} { return INT_LITERAL; }
+{STR} { return STRING_LITERAL; }
+{CHAR} { return CHAR_LITERAL; }
 [ \t\n]+ {}
 ";" {}
-. { yylval = YYText(); return static_cast<int>(Token::TOKEN_ERROR); }
+. { return TOKEN_ERROR; }
 %%
-
-

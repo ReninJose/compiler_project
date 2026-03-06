@@ -1,5 +1,4 @@
-// definitions
-enum class Token{
+typedef enum {
     KEYWORD = 1,
     IDENTIFIERS,
     OPERATORS,
@@ -9,4 +8,4 @@ enum class Token{
     STRING_LITERAL,
     BOOLEANS,
     TOKEN_ERROR
-};
+} Token;
