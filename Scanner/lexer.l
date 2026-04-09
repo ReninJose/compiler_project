@@ -29,6 +29,11 @@ char\[{DIGITS}*\] { return KEYWORD; } /* Standalone string keyword to avoid mixi
 {INT} { return INT_LITERAL; }
 {STR} { return STRING_LITERAL; }
 {CHAR} { return CHAR_LITERAL; }
+[0-9]+ { return TOKEN_INT };
+"+"    { return TOKEN_PLUS };
+"-"    { return TOKEN_MINUS };
+"*"    { return TOKEN_MUL };
+"/"    { return TOKEN_DIV };
 [ \t\n]+ {}
 ";" {}
 . { return TOKEN_ERROR; }
