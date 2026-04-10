@@ -44,7 +44,8 @@
      TOKEN_MINUS = 260,
      TOKEN_MUL = 261,
      TOKEN_DIV = 262,
-     TOKEN_ERROR = 263
+     TOKEN_SEMI = 263,
+     TOKEN_ERROR = 264
    };
 #endif
 /* Tokens.  */
@@ -53,19 +54,20 @@
 #define TOKEN_MINUS 260
 #define TOKEN_MUL 261
 #define TOKEN_DIV 262
-#define TOKEN_ERROR 263
+#define TOKEN_SEMI 263
+#define TOKEN_ERROR 264
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 12 "parser.bison"
+#line 14 "parser.bison"
 {
     struct expr* expr;
 }
 /* Line 1529 of yacc.c.  */
-#line 69 "token.h"
+#line 71 "token.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

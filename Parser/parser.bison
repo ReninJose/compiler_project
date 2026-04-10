@@ -1,3 +1,5 @@
+%start prog
+
 %{
     #include <stdio.h>
     #include <stdlib.h>
@@ -6,10 +8,11 @@
     extern int yylex();
     extern char* yytext;
     struct expr * parser_result = 0;
-    void yyerror(const char *s);
+    int yyerror(const char *s);
 %}
 
 %union {
+    int value;
     struct expr* expr;
 }
 
@@ -18,11 +21,16 @@
 %token TOKEN_MINUS
 %token TOKEN_MUL
 %token TOKEN_DIV
+%token TOKEN_SEMI
 %token TOKEN_ERROR
 
 %type <expr> expr term factor
 
 %%
+
+prog : expr TOKEN_SEMI { parser_result = $1; expr_print(parser_result); } 
+    ;
+
 expr : expr TOKEN_PLUS term     { $$ = expr_arithmetic_create(EXPR_ADD, $1, $3);}
     | expr TOKEN_MINUS term     { $$ = expr_arithmetic_create(EXPR_SUB, $1, $3);}
     | term                      { $$ = $1; }
@@ -37,6 +45,7 @@ factor : TOKEN_INT              { $$ = expr_create_value(atoi(yytext)); }
     ;
 %%
 
-void yyerror(const char *s) {
+int yyerror(const char *s) {
     printf("Parse error: %s\n", s);
+    return 1;
 }

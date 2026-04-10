@@ -5,169 +5,189 @@ Terminals which are not used
 
 Grammar
 
-    0 $accept: expr $end
+    0 $accept: prog $end
 
-    1 expr: expr TOKEN_PLUS term
-    2     | expr TOKEN_MINUS term
-    3     | term
+    1 prog: expr TOKEN_SEMI
 
-    4 term: term TOKEN_MUL factor
-    5     | term TOKEN_DIV factor
-    6     | factor
+    2 expr: expr TOKEN_PLUS term
+    3     | expr TOKEN_MINUS term
+    4     | term
 
-    7 factor: TOKEN_INT
+    5 term: term TOKEN_MUL factor
+    6     | term TOKEN_DIV factor
+    7     | factor
+
+    8 factor: TOKEN_INT
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-TOKEN_INT (258) 7
-TOKEN_PLUS (259) 1
-TOKEN_MINUS (260) 2
-TOKEN_MUL (261) 4
-TOKEN_DIV (262) 5
-TOKEN_ERROR (263)
+TOKEN_INT (258) 8
+TOKEN_PLUS (259) 2
+TOKEN_MINUS (260) 3
+TOKEN_MUL (261) 5
+TOKEN_DIV (262) 6
+TOKEN_SEMI (263) 1
+TOKEN_ERROR (264)
 
 
 Nonterminals, with rules where they appear
 
-$accept (9)
+$accept (10)
     on left: 0
-expr (10)
-    on left: 1 2 3, on right: 0 1 2
-term (11)
-    on left: 4 5 6, on right: 1 2 3 4 5
-factor (12)
-    on left: 7, on right: 4 5 6
+prog (11)
+    on left: 1, on right: 0
+expr (12)
+    on left: 2 3 4, on right: 1 2 3
+term (13)
+    on left: 5 6 7, on right: 2 3 4 5 6
+factor (14)
+    on left: 8, on right: 5 6 7
 
 
 state 0
 
-    0 $accept: . expr $end
+    0 $accept: . prog $end
 
     TOKEN_INT  shift, and go to state 1
 
-    expr    go to state 2
-    term    go to state 3
-    factor  go to state 4
+    prog    go to state 2
+    expr    go to state 3
+    term    go to state 4
+    factor  go to state 5
 
 
 state 1
 
-    7 factor: TOKEN_INT .
+    8 factor: TOKEN_INT .
 
-    $default  reduce using rule 7 (factor)
+    $default  reduce using rule 8 (factor)
 
 
 state 2
 
-    0 $accept: expr . $end
-    1 expr: expr . TOKEN_PLUS term
-    2     | expr . TOKEN_MINUS term
+    0 $accept: prog . $end
 
-    $end         shift, and go to state 5
-    TOKEN_PLUS   shift, and go to state 6
-    TOKEN_MINUS  shift, and go to state 7
+    $end  shift, and go to state 6
 
 
 state 3
 
-    3 expr: term .
-    4 term: term . TOKEN_MUL factor
-    5     | term . TOKEN_DIV factor
+    1 prog: expr . TOKEN_SEMI
+    2 expr: expr . TOKEN_PLUS term
+    3     | expr . TOKEN_MINUS term
 
-    TOKEN_MUL  shift, and go to state 8
-    TOKEN_DIV  shift, and go to state 9
-
-    $default  reduce using rule 3 (expr)
+    TOKEN_PLUS   shift, and go to state 7
+    TOKEN_MINUS  shift, and go to state 8
+    TOKEN_SEMI   shift, and go to state 9
 
 
 state 4
 
-    6 term: factor .
+    4 expr: term .
+    5 term: term . TOKEN_MUL factor
+    6     | term . TOKEN_DIV factor
 
-    $default  reduce using rule 6 (term)
+    TOKEN_MUL  shift, and go to state 10
+    TOKEN_DIV  shift, and go to state 11
+
+    $default  reduce using rule 4 (expr)
 
 
 state 5
 
-    0 $accept: expr $end .
+    7 term: factor .
 
-    $default  accept
+    $default  reduce using rule 7 (term)
 
 
 state 6
 
-    1 expr: expr TOKEN_PLUS . term
+    0 $accept: prog $end .
 
-    TOKEN_INT  shift, and go to state 1
-
-    term    go to state 10
-    factor  go to state 4
+    $default  accept
 
 
 state 7
 
-    2 expr: expr TOKEN_MINUS . term
+    2 expr: expr TOKEN_PLUS . term
 
     TOKEN_INT  shift, and go to state 1
 
-    term    go to state 11
-    factor  go to state 4
+    term    go to state 12
+    factor  go to state 5
 
 
 state 8
 
-    4 term: term TOKEN_MUL . factor
+    3 expr: expr TOKEN_MINUS . term
 
     TOKEN_INT  shift, and go to state 1
 
-    factor  go to state 12
+    term    go to state 13
+    factor  go to state 5
 
 
 state 9
 
-    5 term: term TOKEN_DIV . factor
+    1 prog: expr TOKEN_SEMI .
 
-    TOKEN_INT  shift, and go to state 1
-
-    factor  go to state 13
+    $default  reduce using rule 1 (prog)
 
 
 state 10
 
-    1 expr: expr TOKEN_PLUS term .
-    4 term: term . TOKEN_MUL factor
-    5     | term . TOKEN_DIV factor
+    5 term: term TOKEN_MUL . factor
 
-    TOKEN_MUL  shift, and go to state 8
-    TOKEN_DIV  shift, and go to state 9
+    TOKEN_INT  shift, and go to state 1
 
-    $default  reduce using rule 1 (expr)
+    factor  go to state 14
 
 
 state 11
 
-    2 expr: expr TOKEN_MINUS term .
-    4 term: term . TOKEN_MUL factor
-    5     | term . TOKEN_DIV factor
+    6 term: term TOKEN_DIV . factor
 
-    TOKEN_MUL  shift, and go to state 8
-    TOKEN_DIV  shift, and go to state 9
+    TOKEN_INT  shift, and go to state 1
 
-    $default  reduce using rule 2 (expr)
+    factor  go to state 15
 
 
 state 12
 
-    4 term: term TOKEN_MUL factor .
+    2 expr: expr TOKEN_PLUS term .
+    5 term: term . TOKEN_MUL factor
+    6     | term . TOKEN_DIV factor
 
-    $default  reduce using rule 4 (term)
+    TOKEN_MUL  shift, and go to state 10
+    TOKEN_DIV  shift, and go to state 11
+
+    $default  reduce using rule 2 (expr)
 
 
 state 13
 
-    5 term: term TOKEN_DIV factor .
+    3 expr: expr TOKEN_MINUS term .
+    5 term: term . TOKEN_MUL factor
+    6     | term . TOKEN_DIV factor
+
+    TOKEN_MUL  shift, and go to state 10
+    TOKEN_DIV  shift, and go to state 11
+
+    $default  reduce using rule 3 (expr)
+
+
+state 14
+
+    5 term: term TOKEN_MUL factor .
 
     $default  reduce using rule 5 (term)
+
+
+state 15
+
+    6 term: term TOKEN_DIV factor .
+
+    $default  reduce using rule 6 (term)

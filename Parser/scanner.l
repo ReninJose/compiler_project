@@ -14,7 +14,7 @@
 "-"         { return TOKEN_MINUS; }
 "*"         { return TOKEN_MUL; }
 "/"         { return TOKEN_DIV; }
-
+";"         { return TOKEN_SEMI; }
 [ \t\n]+    { /* ignore whitespace */ }
 
 .           { return TOKEN_ERROR; }
