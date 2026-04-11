@@ -19,6 +19,30 @@ struct expr* expr_create_value(int value){
     return buffer;
 }
 
+struct expr* expr_create_rel(expr_type kind, expr* l, expr* r) {
+    expr *n = (expr*)malloc(sizeof(expr));
+    n->kind = kind;
+    n->left = l;
+    n->right = r;
+    return n;
+}
+
+struct expr* expr_create_logic(expr_type kind, expr* l, expr* r) {
+    expr *n = (expr*)malloc(sizeof(expr));
+    n->kind = kind;
+    n->left = l;
+    n->right = r;
+    return n;
+}
+
+struct expr* expr_create_unary(expr_type kind, expr* a) {
+    expr *n = (expr*)malloc(sizeof(expr));
+    n->kind = kind;
+    n->left = a;
+    n->right = NULL;
+    return n;
+}
+
 void expr_print(struct expr *e){
     if(!e) return;
     printf("(");
@@ -30,6 +54,8 @@ void expr_print(struct expr *e){
         case EXPR_SUB:      printf("-"); break;
 		case EXPR_MUL:      printf("*"); break;
 		case EXPR_DIV: 	    printf("/"); break;
+        case EXPR_AND:      printf("&&"); break;
+        case EXPR_OR:       printf("||"); break;
     default:
         break;
     }

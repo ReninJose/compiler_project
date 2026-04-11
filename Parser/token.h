@@ -44,8 +44,22 @@
      TOKEN_MINUS = 260,
      TOKEN_MUL = 261,
      TOKEN_DIV = 262,
-     TOKEN_SEMI = 263,
-     TOKEN_ERROR = 264
+     TOKEN_KEYWORD = 263,
+     TOKEN_SEMI = 264,
+     TOKEN_ERROR = 265,
+     TOKEN_EQEQ = 266,
+     TOKEN_NEQ = 267,
+     TOKEN_LTE = 268,
+     TOKEN_GTE = 269,
+     TOKEN_LT = 270,
+     TOKEN_GT = 271,
+     TOKEN_AND = 272,
+     TOKEN_OR = 273,
+     TOKEN_NOT = 274,
+     TOKEN_TRUE = 275,
+     TOKEN_FALSE = 276,
+     TOKEN_LPAREN = 277,
+     TOKEN_RPAREN = 278
    };
 #endif
 /* Tokens.  */
@@ -54,8 +68,22 @@
 #define TOKEN_MINUS 260
 #define TOKEN_MUL 261
 #define TOKEN_DIV 262
-#define TOKEN_SEMI 263
-#define TOKEN_ERROR 264
+#define TOKEN_KEYWORD 263
+#define TOKEN_SEMI 264
+#define TOKEN_ERROR 265
+#define TOKEN_EQEQ 266
+#define TOKEN_NEQ 267
+#define TOKEN_LTE 268
+#define TOKEN_GTE 269
+#define TOKEN_LT 270
+#define TOKEN_GT 271
+#define TOKEN_AND 272
+#define TOKEN_OR 273
+#define TOKEN_NOT 274
+#define TOKEN_TRUE 275
+#define TOKEN_FALSE 276
+#define TOKEN_LPAREN 277
+#define TOKEN_RPAREN 278
 
 
 
@@ -64,10 +92,11 @@
 typedef union YYSTYPE
 #line 14 "parser.bison"
 {
+    int val;
     struct expr* expr;
 }
 /* Line 1529 of yacc.c.  */
-#line 71 "token.h"
+#line 100 "token.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
