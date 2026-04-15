@@ -1,11 +1,24 @@
 #include "expr.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-struct expr* expr_arithmetic_create(expr_type kind, expr *left, expr *right){
+struct expr* expr_create_assign(struct expr* id, struct expr* value){
+    struct expr *buffer = (struct expr*) malloc(sizeof(struct expr));
+    buffer->kind = EXPR_ASSIGN;
+    buffer->left = id;
+    buffer->right = value;
+    buffer->value = 0;
+    buffer->bool_value = NULL;
+    buffer->name = NULL;
+    return buffer;
+}
+
+struct expr* expr_create_arithmetic(expr_type kind, expr *left, expr *right){
     struct expr *buffer = (expr*) malloc(sizeof(expr));
     buffer->kind = kind;
     buffer->value = 0;  //init value 
+    buffer->bool_value = NULL;
     buffer->left = left;
     buffer->right = right;
     return buffer;
@@ -13,7 +26,46 @@ struct expr* expr_arithmetic_create(expr_type kind, expr *left, expr *right){
 
 struct expr* expr_create_value(int value){
     struct expr *buffer = (expr*) malloc(sizeof(expr));
+    buffer->kind = EXPR_VALUE;
     buffer->value = value;
+    buffer->char_value = NULL;
+    buffer->bool_value = NULL;
+    buffer->name = NULL;
+    buffer->left = NULL;
+    buffer->right = NULL;
+    return buffer;
+}
+
+struct expr* expr_create_char(char* value){
+    struct expr *buffer = (expr*) malloc(sizeof(expr));
+    buffer->kind = EXPR_CHAR;
+    buffer->value = NULL;
+    buffer->char_value = value;
+    buffer->bool_value = NULL;
+    buffer->name = NULL;
+    buffer->left = NULL;
+    buffer->right = NULL;
+    return buffer;
+}
+
+struct expr* expr_create_bool(bool value){
+    struct expr *buffer = (expr*) malloc(sizeof(expr));
+    buffer->kind = EXPR_BOOL;
+    buffer->value = NULL;
+    buffer->char_value = NULL;
+    buffer->bool_value = value;
+    buffer->name = NULL;
+    buffer->left = NULL;
+    buffer->right = NULL;
+    return buffer;
+}
+
+struct expr* expr_create_identifier(char* name){
+    struct expr *buffer = (expr*) malloc(sizeof(expr));
+    buffer->kind = EXPR_NAME;
+    buffer->value = NULL;
+    buffer->name = strdup(name);
+    buffer->bool_value = NULL;
     buffer->left = NULL;
     buffer->right = NULL;
     return buffer;
@@ -43,22 +95,55 @@ struct expr* expr_create_unary(expr_type kind, expr* a) {
     return n;
 }
 
-void expr_print(struct expr *e){
-    if(!e) return;
-    printf("(");
-    expr_print(e->left);
-    switch (e->kind)
-    {
-        case EXPR_VALUE:    printf("%d",e->value); break;
-        case EXPR_ADD:      printf("+"); break;
-        case EXPR_SUB:      printf("-"); break;
-		case EXPR_MUL:      printf("*"); break;
-		case EXPR_DIV: 	    printf("/"); break;
-        case EXPR_AND:      printf("&&"); break;
-        case EXPR_OR:       printf("||"); break;
-    default:
-        break;
+void expr_print(struct expr *e) {
+    if (!e) return;
+
+    switch (e->kind) {
+        case EXPR_VALUE:
+            printf("%d", e->value);
+            return;
+
+        case EXPR_CHAR:
+            printf("%s", e->char_value);
+            return;
+        
+        case EXPR_BOOL:
+            printf("%d", e->bool_value);
+            return;
+
+        case EXPR_NAME:
+            printf("%s", e->name);
+            return;
+
+        case EXPR_NOT:
+            printf("(!");
+            expr_print(e->left);
+            printf(")");
+            return;
+
+        default:
+            printf("(");
+            expr_print(e->left);
+
+            switch (e->kind) {
+                case EXPR_ASSIGN:   printf("Assignment/Declaration line: "); break;
+                case EXPR_ADD:      printf("+"); break;
+                case EXPR_SUB:      printf("-"); break;
+                case EXPR_MUL:      printf("*"); break;
+                case EXPR_DIV:      printf("/"); break;
+                case EXPR_AND:      printf("&&"); break;
+                case EXPR_OR:       printf("||"); break;
+                case EXPR_EQEQ:     printf("=="); break;
+                case EXPR_NEQ:      printf("!="); break;
+                case EXPR_LTE:      printf("<="); break;
+                case EXPR_GTE:      printf(">="); break;
+                case EXPR_LT:       printf("<"); break;
+                case EXPR_GT:       printf(">"); break;
+                default: break;
+            }
+
+            expr_print(e->right);
+            printf(")");
+            return;
     }
-    expr_print(e->right);
-    printf(")");
 }

@@ -1,2 +1,4 @@
+/Parser/compiler
+*.output
 /Scanner/bin/
 *.yy.cc

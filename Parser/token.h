@@ -40,50 +40,68 @@
       know about them.  */
    enum yytokentype {
      TOKEN_INT = 258,
-     TOKEN_PLUS = 259,
-     TOKEN_MINUS = 260,
-     TOKEN_MUL = 261,
-     TOKEN_DIV = 262,
-     TOKEN_KEYWORD = 263,
-     TOKEN_SEMI = 264,
-     TOKEN_ERROR = 265,
-     TOKEN_EQEQ = 266,
-     TOKEN_NEQ = 267,
-     TOKEN_LTE = 268,
-     TOKEN_GTE = 269,
-     TOKEN_LT = 270,
-     TOKEN_GT = 271,
-     TOKEN_AND = 272,
-     TOKEN_OR = 273,
-     TOKEN_NOT = 274,
-     TOKEN_TRUE = 275,
-     TOKEN_FALSE = 276,
-     TOKEN_LPAREN = 277,
-     TOKEN_RPAREN = 278
+     TOKEN_CHAR = 259,
+     TOKEN_PLUS = 260,
+     TOKEN_MINUS = 261,
+     TOKEN_MUL = 262,
+     TOKEN_DIV = 263,
+     TOKEN_BOOL = 264,
+     TOKEN_TYPE = 265,
+     TOKEN_IFELSE = 266,
+     TOKEN_IDENT = 267,
+     TOKEN_ASSIGN = 268,
+     TOKEN_SEMI = 269,
+     TOKEN_ERROR = 270,
+     TOKEN_EQEQ = 271,
+     TOKEN_NEQ = 272,
+     TOKEN_LTE = 273,
+     TOKEN_GTE = 274,
+     TOKEN_LT = 275,
+     TOKEN_GT = 276,
+     TOKEN_AND = 277,
+     TOKEN_OR = 278,
+     TOKEN_NOT = 279,
+     TOKEN_TRUE = 280,
+     TOKEN_FALSE = 281,
+     TOKEN_LPAREN = 282,
+     TOKEN_RPAREN = 283,
+     TOKEN_LCURLY = 284,
+     TOKEN_RCURLY = 285,
+     TOKEN_RETURN = 286,
+     TOKEN_LIB = 287
    };
 #endif
 /* Tokens.  */
 #define TOKEN_INT 258
-#define TOKEN_PLUS 259
-#define TOKEN_MINUS 260
-#define TOKEN_MUL 261
-#define TOKEN_DIV 262
-#define TOKEN_KEYWORD 263
-#define TOKEN_SEMI 264
-#define TOKEN_ERROR 265
-#define TOKEN_EQEQ 266
-#define TOKEN_NEQ 267
-#define TOKEN_LTE 268
-#define TOKEN_GTE 269
-#define TOKEN_LT 270
-#define TOKEN_GT 271
-#define TOKEN_AND 272
-#define TOKEN_OR 273
-#define TOKEN_NOT 274
-#define TOKEN_TRUE 275
-#define TOKEN_FALSE 276
-#define TOKEN_LPAREN 277
-#define TOKEN_RPAREN 278
+#define TOKEN_CHAR 259
+#define TOKEN_PLUS 260
+#define TOKEN_MINUS 261
+#define TOKEN_MUL 262
+#define TOKEN_DIV 263
+#define TOKEN_BOOL 264
+#define TOKEN_TYPE 265
+#define TOKEN_IFELSE 266
+#define TOKEN_IDENT 267
+#define TOKEN_ASSIGN 268
+#define TOKEN_SEMI 269
+#define TOKEN_ERROR 270
+#define TOKEN_EQEQ 271
+#define TOKEN_NEQ 272
+#define TOKEN_LTE 273
+#define TOKEN_GTE 274
+#define TOKEN_LT 275
+#define TOKEN_GT 276
+#define TOKEN_AND 277
+#define TOKEN_OR 278
+#define TOKEN_NOT 279
+#define TOKEN_TRUE 280
+#define TOKEN_FALSE 281
+#define TOKEN_LPAREN 282
+#define TOKEN_RPAREN 283
+#define TOKEN_LCURLY 284
+#define TOKEN_RCURLY 285
+#define TOKEN_RETURN 286
+#define TOKEN_LIB 287
 
 
 
@@ -96,7 +114,7 @@ typedef union YYSTYPE
     struct expr* expr;
 }
 /* Line 1529 of yacc.c.  */
-#line 100 "token.h"
+#line 118 "token.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

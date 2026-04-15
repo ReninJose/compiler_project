@@ -15,12 +15,12 @@ typedef enum{
     EXPR_GT,
     EXPR_EQEQ,
     EXPR_NEQ,
-    // EXPR_REL,
-    // EXPR_BOOL,
-    // EXPR_LOGIC,
     EXPR_NOT,
-    // EXPR_IF,
-    EXPR_VALUE
+    EXPR_ASSIGN,
+    EXPR_VALUE,
+    EXPR_CHAR,
+    EXPR_BOOL,
+    EXPR_NAME
 } expr_type;
 
 typedef struct expr
@@ -29,13 +29,19 @@ typedef struct expr
     struct expr *left;
     struct expr *right;
     int value;
+    char* char_value;
+    bool bool_value;
+    char* name;
 }expr;
 
-struct expr* expr_arithmetic_create(expr_type kind, struct expr *left, struct expr *right);
+struct expr* expr_create_arithmetic(expr_type kind, struct expr *left, struct expr *right);
 struct expr* expr_create_value(int value);
+struct expr* expr_create_char(char* value);
+struct expr* expr_create_identifier(char* name);
 struct expr* expr_create_rel(expr_type kind, expr* a, expr* b);
 struct expr* expr_create_logic(expr_type kind, expr* a, expr* b);
-struct expr* expr_create_bool(int v);
+struct expr* expr_create_assign(struct expr* id, struct expr* value);
+struct expr* expr_create_bool(bool value);
 struct expr* expr_create_unary(expr_type kind, expr* a);
 void expr_print(struct expr *e);
 
