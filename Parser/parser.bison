@@ -77,7 +77,7 @@ statement : assignment                                                          
     | TOKEN_IFELSE TOKEN_LPAREN logical_expr TOKEN_RPAREN TOKEN_LCURLY              { $$ = $3; }
     ;
 
-assignment : TOKEN_IDENT TOKEN_ASSIGN logical_expr TOKEN_SEMI { $$ = expr_create_assign($1, $3); }
+assignment : factor TOKEN_ASSIGN logical_expr TOKEN_SEMI { $$ = expr_create_assign($1, $3); printf("assign");}
     ;
 
 decl : TOKEN_TYPE TOKEN_IDENT TOKEN_ASSIGN logical_expr TOKEN_SEMI  { $$ = expr_create_assign($2, $4); }
@@ -116,10 +116,10 @@ term : term TOKEN_MUL factor    { $$ = expr_create_arithmetic(EXPR_MUL, $1, $3);
     | factor                    { $$ = $1; }
     ;
 
-factor : TOKEN_INT              { $$ = expr_create_value(atoi(yytext)); }
-    | TOKEN_CHAR                { $$ = expr_create_char(yytext); }
-    | TOKEN_IDENT               { $$ = expr_create_identifier(yytext); }
-    | TOKEN_BOOL                { $$ = expr_create_bool(yytext); }
+factor : TOKEN_INT              { $$ = expr_create_value(atoi(yytext)); printf("factor");}
+    | TOKEN_CHAR                { $$ = expr_create_char(yytext); printf("char");}
+    | TOKEN_IDENT               { $$ = expr_create_identifier(yytext); printf("ident");}
+    | TOKEN_BOOL                { $$ = expr_create_bool(yytext); printf("bool");}
     ;
 
 %%

@@ -9,22 +9,23 @@
 DIGITS [0-9]
 LETTERS [a-zA-Z]
 IDENTIFIERS {LETTERS}({LETTERS}|{DIGITS}|_)*
-IFELSE (if|else)
 
 %%
 "#include"[<\"]{IDENTIFIERS}"."{LETTERS}[>\"]   { return TOKEN_LIB; }
 int             { return TOKEN_INT_TYPE; }
+bool            { return TOKEN_BOOL_TYPE; }
 char            { return TOKEN_CHAR_TYPE; }
 float           { return TOKEN_FLOAT_TYPE; }
 void            { return TOKEN_VOID_TYPE; }
-{IFELSE}        { return TOKEN_IFELSE; }
+if              { return TOKEN_IF; }
+else            { return TOKEN_ELSE; }
 (true|false)    { return TOKEN_BOOL; }
 "return"        { return TOKEN_RETURN; }
 {IDENTIFIERS}   { return TOKEN_IDENT; }
 "'"[a-zA-Z0-9]"'" { return TOKEN_CHAR; }
 {DIGITS}+       { return TOKEN_INT; }
 "+"             { return TOKEN_PLUS; }
-"="             { return TOKEN_ASSIGN; }
+"="             { return TOKEN_ASSIGN; }  
 "-"             { return TOKEN_MINUS; }
 "*"             { return TOKEN_MUL; }
 "/"             { return TOKEN_DIV; }
