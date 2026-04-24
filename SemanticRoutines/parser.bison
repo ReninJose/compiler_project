@@ -103,7 +103,7 @@ conditions : expr TOKEN_LT expr             { $$ = expr_create(EXPR_LT, $1, $3);
 
 param_list : type TOKEN_IDENT                       { $$ = param_list_create($2, $1, 0); }
     | type TOKEN_IDENT TOKEN_COMMA param_list       { $$ = param_list_create($2, $1, $4); }
-    |                                               { $$ = param_list_create(0, type_create(DECL_VOID, 0, 0), 0); }
+    |                                               { $$ = 0; }
     ;
 
 type : TOKEN_INT_TYPE   { $$ = type_create(DECL_INT, 0, 0); }
@@ -125,7 +125,7 @@ term : term TOKEN_MUL factor    { $$ = expr_create(EXPR_MUL, $1, $3);}
 factor : TOKEN_INT              { $$ = expr_create_int_literal(atoi(yytext));}
     | TOKEN_FLOAT               { $$ = expr_create_float_literal(atof(yytext));}
     | TOKEN_CHAR                { $$ = expr_create_char_literal(yytext[1]);}
-    | TOKEN_IDENT               { $$ = expr_create_name(yytext);}
+    | TOKEN_IDENT               { $$ = expr_create_name($1);}
     | TOKEN_BOOL                { $$ = expr_create_bool_literal(yytext);}
     ;
 

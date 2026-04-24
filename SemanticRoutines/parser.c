@@ -1563,7 +1563,7 @@ yyreduce:
 
   case 22:
 #line 106 "parser.bison"
-    { (yyval.param) = param_list_create(0, type_create(DECL_VOID, 0, 0), 0); ;}
+    { (yyval.param) = 0; ;}
     break;
 
   case 23:
@@ -1638,7 +1638,7 @@ yyreduce:
 
   case 37:
 #line 128 "parser.bison"
-    { (yyval.expr) = expr_create_name(yytext);;}
+    { (yyval.expr) = expr_create_name((yyvsp[(1) - (1)].name));;}
     break;
 
   case 38:
