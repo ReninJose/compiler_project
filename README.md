@@ -14,3 +14,11 @@
 3. Run the code: ./compiler
 
 - note: The parser will read the contents in the file line by line. If the parser outputs nothing, then the parser parsed the line properly but I havn't added a functionality to return a value.
+
+## Semantic Routines
+- Instruction to run the parser:
+1. cd into the semanticRoutines folder
+2. Run the script "./run.sh". It should compile and run all the test cases together.
+
+To run test cases independently: ./compiler test/test<1-5>.cpp
+Example: ./compiler test/test3.cpp
