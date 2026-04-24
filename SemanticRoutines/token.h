@@ -47,35 +47,35 @@
      TOKEN_IF = 263,
      TOKEN_ELSE = 264,
      TOKEN_INT = 265,
-     TOKEN_CHAR = 266,
-     TOKEN_PLUS = 267,
-     TOKEN_MINUS = 268,
-     TOKEN_MUL = 269,
-     TOKEN_DIV = 270,
-     TOKEN_BOOL = 271,
-     TOKEN_TYPE = 272,
-     TOKEN_IDENT = 273,
-     TOKEN_ASSIGN = 274,
-     TOKEN_SEMI = 275,
-     TOKEN_ERROR = 276,
-     TOKEN_EQEQ = 277,
-     TOKEN_NEQ = 278,
-     TOKEN_LTE = 279,
-     TOKEN_GTE = 280,
-     TOKEN_LT = 281,
-     TOKEN_GT = 282,
-     TOKEN_AND = 283,
-     TOKEN_OR = 284,
-     TOKEN_NOT = 285,
-     TOKEN_TRUE = 286,
-     TOKEN_FALSE = 287,
-     TOKEN_LPAREN = 288,
-     TOKEN_RPAREN = 289,
-     TOKEN_LCURLY = 290,
-     TOKEN_RCURLY = 291,
-     TOKEN_RETURN = 292,
-     TOKEN_LIB = 293,
-     stmt = 294
+     TOKEN_FLOAT = 266,
+     TOKEN_CHAR = 267,
+     TOKEN_PLUS = 268,
+     TOKEN_MINUS = 269,
+     TOKEN_MUL = 270,
+     TOKEN_DIV = 271,
+     TOKEN_BOOL = 272,
+     TOKEN_TYPE = 273,
+     TOKEN_IDENT = 274,
+     TOKEN_ASSIGN = 275,
+     TOKEN_SEMI = 276,
+     TOKEN_ERROR = 277,
+     TOKEN_EQEQ = 278,
+     TOKEN_NEQ = 279,
+     TOKEN_LTE = 280,
+     TOKEN_GTE = 281,
+     TOKEN_LT = 282,
+     TOKEN_GT = 283,
+     TOKEN_AND = 284,
+     TOKEN_OR = 285,
+     TOKEN_NOT = 286,
+     TOKEN_TRUE = 287,
+     TOKEN_FALSE = 288,
+     TOKEN_LPAREN = 289,
+     TOKEN_RPAREN = 290,
+     TOKEN_LCURLY = 291,
+     TOKEN_RCURLY = 292,
+     TOKEN_RETURN = 293,
+     TOKEN_COMMA = 294
    };
 #endif
 /* Tokens.  */
@@ -87,51 +87,53 @@
 #define TOKEN_IF 263
 #define TOKEN_ELSE 264
 #define TOKEN_INT 265
-#define TOKEN_CHAR 266
-#define TOKEN_PLUS 267
-#define TOKEN_MINUS 268
-#define TOKEN_MUL 269
-#define TOKEN_DIV 270
-#define TOKEN_BOOL 271
-#define TOKEN_TYPE 272
-#define TOKEN_IDENT 273
-#define TOKEN_ASSIGN 274
-#define TOKEN_SEMI 275
-#define TOKEN_ERROR 276
-#define TOKEN_EQEQ 277
-#define TOKEN_NEQ 278
-#define TOKEN_LTE 279
-#define TOKEN_GTE 280
-#define TOKEN_LT 281
-#define TOKEN_GT 282
-#define TOKEN_AND 283
-#define TOKEN_OR 284
-#define TOKEN_NOT 285
-#define TOKEN_TRUE 286
-#define TOKEN_FALSE 287
-#define TOKEN_LPAREN 288
-#define TOKEN_RPAREN 289
-#define TOKEN_LCURLY 290
-#define TOKEN_RCURLY 291
-#define TOKEN_RETURN 292
-#define TOKEN_LIB 293
-#define stmt 294
+#define TOKEN_FLOAT 266
+#define TOKEN_CHAR 267
+#define TOKEN_PLUS 268
+#define TOKEN_MINUS 269
+#define TOKEN_MUL 270
+#define TOKEN_DIV 271
+#define TOKEN_BOOL 272
+#define TOKEN_TYPE 273
+#define TOKEN_IDENT 274
+#define TOKEN_ASSIGN 275
+#define TOKEN_SEMI 276
+#define TOKEN_ERROR 277
+#define TOKEN_EQEQ 278
+#define TOKEN_NEQ 279
+#define TOKEN_LTE 280
+#define TOKEN_GTE 281
+#define TOKEN_LT 282
+#define TOKEN_GT 283
+#define TOKEN_AND 284
+#define TOKEN_OR 285
+#define TOKEN_NOT 286
+#define TOKEN_TRUE 287
+#define TOKEN_FALSE 288
+#define TOKEN_LPAREN 289
+#define TOKEN_RPAREN 290
+#define TOKEN_LCURLY 291
+#define TOKEN_RCURLY 292
+#define TOKEN_RETURN 293
+#define TOKEN_COMMA 294
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 16 "parser.bison"
+#line 55 "parser.bison"
 {
     int val;
-    struct stmt* stmt;
+    char* name;
     struct type* type;
     struct decl* decl; 
     struct expr* expr;
+    struct param_list* param;
+    struct stmt* stmt;
 }
 /* Line 1529 of yacc.c.  */
-#line 135 "token.h"
+#line 137 "token.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

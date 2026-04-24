@@ -4,22 +4,14 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "ast.h"
+    #include "symbol_table.h"
     #include "token.h"
 
     extern int yylex();
     extern char* yytext;
-    struct expr * parser_result = 0;
-    struct decl * parser_result = 0;
+    struct stmt* parser_result = 0;
     int yyerror(const char *s);
 %}
-
-%union {
-    int val;
-    struct stmt* stmt;
-    struct type* type;
-    struct decl* decl; 
-    struct expr* expr;
-}
 
 %token TOKEN_INT_TYPE
 %token TOKEN_CHAR_TYPE
@@ -29,6 +21,7 @@
 %token TOKEN_IF
 %token TOKEN_ELSE
 %token TOKEN_INT
+%token TOKEN_FLOAT
 %token TOKEN_CHAR
 %token TOKEN_PLUS
 %token TOKEN_MINUS
@@ -56,25 +49,62 @@
 %token TOKEN_LCURLY
 %token TOKEN_RCURLY
 %token TOKEN_RETURN
-%token TOKEN_LIB
-%token stmt
+%token TOKEN_COMMA
+//%token stmt
 
-%type <decl> prog statement decl
-%type <expr> expr term factor TOKEN_IDENT
-%type <stmt> stmt
+%union {
+    int val;
+    char* name;
+    struct type* type;
+    struct decl* decl; 
+    struct expr* expr;
+    struct param_list* param;
+    struct stmt* stmt;
+}
+
+%type <stmt> prog code stmt
+%type <decl> decl func_decl
+%type <expr> expr term factor conditions
+%type <param> param_list
 %type <type> type
+%type <name> TOKEN_IDENT
 
 %%
 
-prog : statement { parser_result = $1; }
+prog : code { parser_result = $1; }
     ;
 
-statement : decl TOKEN_SEMI statement   { $$ = $1; $1->next = $3;}
-    |                                   { $$ = 0; }
+code : stmt code    { $$ = $1; $1->next = $2; }
+    |               { $$ = 0; }
     ;
 
-decl : type TOKEN_IDENT                       { $$ = decl_create($2, $1, 0, 0, 0); }
-    | type TOKEN_IDENT TOKEN_ASSIGN expr      { $$ = decl_create($2, $1, $4, 0, 0); }    
+stmt : decl TOKEN_SEMI                                                                                                          { $$ = stmt_create(STMT_DECL, $1, 0, 0, 0, 0, 0, 0); }
+    | func_decl TOKEN_LCURLY code TOKEN_RCURLY                                                                                  { $$ = stmt_create(STMT_FUNCTION, $1, 0, 0, 0, $3, 0, 0); }
+    | TOKEN_IF TOKEN_LPAREN conditions TOKEN_RPAREN TOKEN_LCURLY code TOKEN_RCURLY                                              { $$ = stmt_create(STMT_IF_ELSE, 0, $3, 0, 0, $6, 0, 0); }
+    | TOKEN_IF TOKEN_LPAREN conditions TOKEN_RPAREN TOKEN_LCURLY code TOKEN_RCURLY TOKEN_ELSE TOKEN_LCURLY code TOKEN_RCURLY    { $$ = stmt_create(STMT_IF_ELSE, 0, $3, 0, 0, $6, $10, 0); }
+    | TOKEN_RETURN expr TOKEN_SEMI                                                                                              { $$ = stmt_create(STMT_RETURN, 0, 0, $2, 0, 0, 0, 0); }
+    | TOKEN_IDENT TOKEN_ASSIGN expr TOKEN_SEMI                                                                                  { $$ = stmt_create(STMT_EXPR, 0, 0, expr_create(EXPR_ASSIGN, expr_create_name($1), $3), 0, 0, 0, 0); }
+    ;
+
+decl : type TOKEN_IDENT                                         { $$ = decl_create($2, $1, 0, 0, 0); }
+    | type TOKEN_IDENT TOKEN_ASSIGN expr                        { $$ = decl_create($2, $1, $4, 0, 0); }
+    ;
+
+func_decl : type TOKEN_IDENT TOKEN_LPAREN param_list TOKEN_RPAREN     { $$ = decl_create($2, type_create(DECL_FUNCTION, $1, $4), 0, 0, 0); }
+    ;
+
+conditions : expr TOKEN_LT expr             { $$ = expr_create(EXPR_LT, $1, $3); }
+    | expr TOKEN_GT expr                    { $$ = expr_create(EXPR_GT, $1, $3); }
+    | expr TOKEN_LTE expr                   { $$ = expr_create(EXPR_LTE, $1, $3); }
+    | expr TOKEN_GTE expr                   { $$ = expr_create(EXPR_GTE, $1, $3); }
+    | expr TOKEN_EQEQ expr                  { $$ = expr_create(EXPR_EQEQ, $1, $3); }
+    | expr TOKEN_NEQ expr                   { $$ = expr_create(EXPR_NEQ, $1, $3); }
+    ;
+
+param_list : type TOKEN_IDENT                       { $$ = param_list_create($2, $1, 0); }
+    | type TOKEN_IDENT TOKEN_COMMA param_list       { $$ = param_list_create($2, $1, $4); }
+    |                                               { $$ = param_list_create(0, type_create(DECL_VOID, 0, 0), 0); }
+    ;
 
 type : TOKEN_INT_TYPE   { $$ = type_create(DECL_INT, 0, 0); }
     | TOKEN_FLOAT_TYPE  { $$ = type_create(DECL_FLOAT, 0, 0); }
@@ -93,7 +123,8 @@ term : term TOKEN_MUL factor    { $$ = expr_create(EXPR_MUL, $1, $3);}
     ;
 
 factor : TOKEN_INT              { $$ = expr_create_int_literal(atoi(yytext));}
-    | TOKEN_CHAR                { $$ = expr_create_char_literal(yytext);}
+    | TOKEN_FLOAT               { $$ = expr_create_float_literal(atof(yytext));}
+    | TOKEN_CHAR                { $$ = expr_create_char_literal(yytext[1]);}
     | TOKEN_IDENT               { $$ = expr_create_name(yytext);}
     | TOKEN_BOOL                { $$ = expr_create_bool_literal(yytext);}
     ;

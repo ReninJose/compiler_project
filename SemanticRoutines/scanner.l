@@ -11,7 +11,6 @@ LETTERS [a-zA-Z]
 IDENTIFIERS {LETTERS}({LETTERS}|{DIGITS}|_)*
 
 %%
-"#include"[<\"]{IDENTIFIERS}"."{LETTERS}[>\"]   { return TOKEN_LIB; }
 int             { return TOKEN_INT_TYPE; }
 bool            { return TOKEN_BOOL_TYPE; }
 char            { return TOKEN_CHAR_TYPE; }
@@ -21,9 +20,10 @@ if              { return TOKEN_IF; }
 else            { return TOKEN_ELSE; }
 (true|false)    { return TOKEN_BOOL; }
 "return"        { return TOKEN_RETURN; }
-{IDENTIFIERS}   { return TOKEN_IDENT; }
-"'"[a-zA-Z0-9]"'" { return TOKEN_CHAR; }
-{DIGITS}+       { return TOKEN_INT; }
+{IDENTIFIERS}           { yylval.name = strdup(yytext); return TOKEN_IDENT; }
+"'"[a-zA-Z0-9]"'"       { return TOKEN_CHAR; }
+{DIGITS}+               { return TOKEN_INT; }
+{DIGITS}+"."{DIGITS}+   { return TOKEN_FLOAT; }
 "+"             { return TOKEN_PLUS; }
 "="             { return TOKEN_ASSIGN; }  
 "-"             { return TOKEN_MINUS; }
@@ -43,6 +43,7 @@ else            { return TOKEN_ELSE; }
 ")"             { return TOKEN_RPAREN; }
 "{"             { return TOKEN_LCURLY; }
 "}"             { return TOKEN_RCURLY; }
+","             { return TOKEN_COMMA; }
 (" "|\t|\n)+    { /* ignore whitespace */ }
 .               { return TOKEN_ERROR; }
 %%
