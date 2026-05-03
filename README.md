@@ -16,9 +16,14 @@
 - note: The parser will read the contents in the file line by line. If the parser outputs nothing, then the parser parsed the line properly but I havn't added a functionality to return a value.
 
 ## Semantic Routines
-- Instruction to run the parser:
+- Instruction to run semantic routines code:
 1. cd into the semanticRoutines folder
 2. Run the script "./run.sh". It should compile and run all the test cases together.
 
 To run test cases independently: ./compiler test/test<1-5>.cpp
 Example: ./compiler test/test3.cpp
+
+## Code Generator
+- Instruction to run the code generator
+1. cd into the CodeGenerator folder
+2. Run the script "./run.sh". The code will read each file one by one and produces a arm file inside the output folder
