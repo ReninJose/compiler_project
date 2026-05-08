@@ -27,3 +27,16 @@ Example: ./compiler test/test3.cpp
 - Instruction to run the code generator
 1. cd into the CodeGenerator folder
 2. Run the script "./run.sh". The code will read each file one by one and produces a arm file inside the output folder
+
+## Code Optimizer
+- I have included the following optimization techniques:
+- 1. Constant Folding 
+- 2. Strength Reduction
+- 3. Dead Code Elimination
+- 4. Code Hoisting
+
+- Instruction to run the code optimizer
+1. cd into the Optimization folder
+2. Run the script "./run.sh". The code will generate the assembly files inside the output folder
+
+- Note: I've used AI to help me print the AST tree on the terminal and to generate code optimizer's test cases. I've mentioned in code as comments to point out AI code.  

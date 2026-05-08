@@ -85,18 +85,18 @@ static void emit_stmt(FILE *out, struct stmt *s)
         case STMT_FUNCTION:
             fprintf(out, "STMT_FUNCTION %s\n", s->decl->name);
             emit_type(out, s->decl->type);
-            emit_stmt(out, s->body);              // inner list → ends with NULL_STMT
+            emit_stmt(out, s->body);          
             break;
 
         case STMT_IF_ELSE:
             fprintf(out, "STMT_IF\n");
             emit_expr(out, s->init_expr);
-            emit_stmt(out, s->body);              // then-body → ends with NULL_STMT
-            emit_stmt(out, s->else_body);         // else-body → ends with NULL_STMT
+            emit_stmt(out, s->body);              
+            emit_stmt(out, s->else_body);        
             break;
     }
 
-    emit_stmt(out, s->next);                      // sibling at same level
+    emit_stmt(out, s->next);                     
 }
 
 void ir_emit(FILE *out, struct stmt *root)
@@ -105,7 +105,7 @@ void ir_emit(FILE *out, struct stmt *root)
     emit_stmt(out, root);
 }
 
-// AI Generated
+// AI generated
 static void next_tok()
 {
     // Skip comment lines (lines starting with '#')
@@ -133,8 +133,8 @@ static struct type *read_type()
         struct type *ret = read_type();
         struct param_list *head = nullptr, *tail = nullptr;
         for (int i = 0; i < n; i++) {
-            next_tok();                            // "PARAM"
-            next_tok();                            // name
+            next_tok();                            
+            next_tok();                            
             char *nm = strdup(g_tok);
             struct type *pt = read_type();
             struct param_list *p = param_list_create(nm, pt, nullptr);
@@ -181,7 +181,7 @@ static struct expr *read_expr()
     return expr_create(k, l, r);
 }
 
-// AI Generated
+// AI generated
 static struct stmt *read_stmt()
 {
     next_tok();
@@ -209,14 +209,14 @@ static struct stmt *read_stmt()
         next_tok();
         char *nm       = strdup(g_tok);
         struct type *t = read_type();
-        struct stmt *body = read_stmt();           // reads inner list until NULL_STMT
+        struct stmt *body = read_stmt();         
         struct decl *d    = decl_create(nm, t, nullptr, nullptr, nullptr);
         s = stmt_create(STMT_FUNCTION, d, nullptr, nullptr, nullptr, body, nullptr, nullptr);
     }
     else if (!strcmp(g_tok, "STMT_IF")) {
         struct expr *cond   = read_expr();
-        struct stmt *then_b = read_stmt();         // reads until NULL_STMT
-        struct stmt *else_b = read_stmt();         // reads until NULL_STMT (may be just NULL_STMT → nullptr)
+        struct stmt *then_b = read_stmt();         
+        struct stmt *else_b = read_stmt();         
         s = stmt_create(STMT_IF_ELSE, nullptr, cond, nullptr, nullptr, then_b, else_b, nullptr);
     }
     else {
